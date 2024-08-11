@@ -5,23 +5,18 @@ FROM docker.io/library/golang:alpine AS dist
 RUN apk add --update --no-cache \
         build-base curl git
 
-
-#ARG restic_ver=0.17.0
+ARG restic_ver=0.17.0
 
 # Prepare dirs for export
 RUN mkdir -p /out/usr/local/bin/ \
              /out/usr/share/licenses/restic/
 
-# Get latest restic from github
-RUN git clone https://github.com/restic/restic /tmp/restic-latest
-
-# Download restic
-#RUN curl -fL -o /tmp/restic.tar.gz \
-#         https://github.com/restic/restic/releases/download/v${restic_ver}/restic-${restic_ver}.tar.gz \
-# && tar -xzf /tmp/restic.tar.gz -C /tmp
+RUN curl -fL -o /tmp/restic.tar.gz \
+         https://github.com/restic/restic/releases/download/v${restic_ver}/restic-${restic_ver}.tar.gz \
+ && tar -xzf /tmp/restic.tar.gz -C /tmp
 
 # Build restic
-RUN cd /tmp/restic-latest \
+RUN cd /tmp/restic-* \
  && go run build.go \
  && cp restic /out/usr/local/bin/ \
  && cp LICENSE /out/usr/share/licenses/restic/
@@ -38,7 +33,7 @@ RUN \
     mkdir -p /mnt/restic /var/spool/cron/crontabs /var/log; \
     touch /var/log/cron.log;
 
-ENV RESTIC_REPOSITORY=/mnt/repo
+ENV RESTIC_REPOSITORY=/mnt/repo \
     RESTIC_PASSWORD=""
 
 ENV RESTIC_TAG=""
