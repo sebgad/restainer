@@ -5,7 +5,7 @@ FROM docker.io/library/golang:alpine AS dist
 RUN apk add --update --no-cache \
         build-base curl git
 
-ARG restic_ver=0.17.0
+ARG restic_ver=0.17.1
 
 # Prepare dirs for export
 RUN mkdir -p /out/usr/local/bin/ \
