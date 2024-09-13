@@ -5,6 +5,23 @@ This repository is heavily based on [https://github.com/lobaro/restic-backup-doc
 
 It is intended to use in combination with podman pods and adds the feature to store mariadb databases inside a pod.
 
+## Push Container to docker.io
+
+Move into the directory and run the following command for building the container:
+```
+podman build -t sebgad/restainer .
+```
+
+Login to docker.io:
+```
+podman login docker.io
+```
+
+Push image to docker.io:
+```
+podman push sebgad/restainer
+```
+
 ## Hooks
 
 If you need to execute a script before or after each backup or check, you need to add your hook scripts in the container folder `/hooks`:
