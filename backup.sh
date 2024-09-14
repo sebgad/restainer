@@ -4,7 +4,7 @@
 set -euo pipefail
 
 lastLogfile="/var/log/backup-last.log"
-lastLogMailFile = "/var/log/backup-email-last.log"
+lastLogMailFile="/var/log/backup-email-last.log"
 
 copyErrorLog() {
   cp ${lastLogfile} /var/log/backup-error-last.log
@@ -72,10 +72,10 @@ if [ -n "${MARIADB_DATABASE}" ]; then
     logLast "Finished backup at $(date)"
     if [[ $backupRCMariadb == 0 ]]; then
         echo "MariaDB backup Successful"
-	LogMail "MariaDB Backup ${RESTIC_TAG} finished successfully."
+	    LogMail "MariaDB Backup ${RESTIC_TAG} finished successfully."
     else
         echo "MariaDB Failed with Status ${backupRCMariadb}"
-	LogMail "MariaDB Backup failed with Status ${backupRCMariadb}"
+	    LogMail "MariaDB Backup failed with Status ${backupRCMariadb}"
         restic unlock
         copyErrorLogMariadb
     fi
@@ -88,10 +88,10 @@ if [[ $backupRC == 0 ]] && [ -n "${RESTIC_FORGET_ARGS}" ]; then
     logLast "Finished forget at $(date)"
     if [[ $rc == 0 ]]; then
         echo "Forget Successful"
-	LogMail "Forget ${RESTIC_TAG} finished successfully."
+	    LogMail "Forget ${RESTIC_TAG} finished successfully."
     else
         echo "Forget Failed with Status ${rc}"
-	LogMail "Forget ${RESTIC_TAG} Failed with Status ${rc}."
+	    LogMail "Forget ${RESTIC_TAG} Failed with Status ${rc}."
         restic unlock
         copyErrorLog
     fi
