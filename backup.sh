@@ -24,7 +24,7 @@ LogMail() {
 
 start=`date +%s`
 rm -f ${lastLogfile}
-rm -f ${LastLogMailFile}
+rm -f ${lastLogMailFile}
 
 touch ${lastLogfile}
 touch ${LastLogMailFile}
