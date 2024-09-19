@@ -19,7 +19,7 @@ logLast() {
 }
 
 LogMail() {
-  echo "$1" >> ${LastLogMailFile}
+  echo "$1" >> ${lastLogMailFile}
 }
 
 start=`date +%s`
@@ -27,7 +27,7 @@ rm -f ${lastLogfile}
 rm -f ${lastLogMailFile}
 
 touch ${lastLogfile}
-touch ${LastLogMailFile}
+touch ${lastLogMailFile}
 
 echo "--- Starting Backup ${RESTIC_TAG} at $(date +"%Y-%m-%d %H:%M:%S") ---"
 echo "--- Starting Backup ${RESTIC_TAG} at $(date) ---" >> ${lastLogfile}
