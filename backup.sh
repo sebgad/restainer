@@ -26,9 +26,11 @@ start=`date +%s`
 rm -f ${lastLogfile}
 rm -f ${LastLogMailFile}
 
-echo "--- Starting Backup at $(date +"%Y-%m-%d %H:%M:%S") ---"
-echo "--- Starting Backup at $(date) ---" >> ${lastLogfile}
-echo "--- Starting Backup at $(date) ---" >> ${LastLogMailFile}
+touch ${lastLogfile}
+touch ${LastLogMailFile}
+
+echo "--- Starting Backup ${RESTIC_TAG} at $(date +"%Y-%m-%d %H:%M:%S") ---"
+echo "--- Starting Backup ${RESTIC_TAG} at $(date) ---" >> ${lastLogfile}
 
 if [ -f "/hooks/pre-backup.sh" ]; then
     echo "Starting pre-backup script ..."
@@ -51,7 +53,7 @@ logLast "Finished backup at $(date)"
 
 if [[ $backupRC == 0 ]]; then
     echo "Backup Successful"
-    LogMail "Backup ${RESTIC_TAG} finished successfully."
+    LogMail "File Backup ${RESTIC_TAG} finished successfully."
 else
     echo "File Backup failed with Status ${backupRC}"
     LogMail "File Backup failed with Status ${backupRC}"
@@ -75,7 +77,7 @@ if [ -n "${MARIADB_DATABASE}" ]; then
 	    LogMail "MariaDB Backup ${RESTIC_TAG} finished successfully."
     else
         echo "MariaDB Failed with Status ${backupRCMariadb}"
-	    LogMail "MariaDB Backup failed with Status ${backupRCMariadb}"
+	    LogMail "MariaDB Backup ${RESTIC_TAG} failed with Status ${backupRCMariadb}"
         restic unlock
         copyErrorLogMariadb
     fi
@@ -106,4 +108,3 @@ fi
 
 end=`date +%s`
 echo "--- Finished Backup at $(date +"%Y-%m-%d %H:%M:%S") after $((end-start)) seconds ---"
-LogMail "--- Finished Backup at $(date +"%Y-%m-%d %H:%M:%S") after $((end-start)) seconds ---"
